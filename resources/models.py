@@ -1,0 +1,30 @@
+from django.db import models
+from django.contrib.auth.models import User
+from account.models import Subject,Department
+# Create your models here.
+
+class Question(models.Model):
+    question_text=models.TextField()
+    type=models.CharField(max_length=50,choices=(('Multiple Choice','MC'),('Short Answer','SA'),('True or False','TF'),('Fill in the blanks','FITB')))
+    explanation=models.TextField()
+    hint=models.TextField()
+    subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE)
+    date_uploaded=models.DateField()
+
+# TODO: FIND A BETTER WAY TO USE CHOICES
+class Choice(models.Model):
+    choice_text=models.TextField()
+    question=models.ForeignKey(Question,on_delete=models.CASCADE,related_name='choices')
+    answer_to=models.ForeignKey(Question,on_delete=models.CASCADE)
+
+class Exam(models.Model):
+    url=models.CharField(max_length=250)
+    subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE)
+
+class Videos(models.Model):
+    url=models.CharField(max_length=250)
+    name=models.CharField(max_length=100)
+    subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE)

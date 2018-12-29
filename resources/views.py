@@ -2,6 +2,9 @@ from django.shortcuts import render,redirect
 from urllib.parse import urlparse as u
 from .models import Video,Slide,Handout
 from account.models import Department,Subject
+from django.core.files.storage import FileSystemStorage
+from .forms import SlideForm
+
 # Create your views here.
 
 def extract_id(url): #extracts the youtube id from any given working youtube link
@@ -65,3 +68,30 @@ def get_videos(request,n=3,s=0):
     return lst
 def list_videos(request):
     pass
+#/////////////////////////////////
+# TODO: Validate FILE type and SIZE!!!
+def add_slides(request):
+    if request.method == 'POST':
+        req=request.POST
+        url=request.FILES['aslide']
+        dept=req['Department']
+        sub=req['Subject']
+        ne = FileSystemStorage()
+        a=ne.save(url.name,url)
+        nm=url.name
+        ns=Slide()
+        ns.file="/Uploads/" + a
+        ns.name=nm
+        ns.department=Department.objects.get(pk=dept)
+        ns.subject=Subject.objects.get(pk=sub)
+        ns.save()
+    dept = Department.objects.all()
+    sub = Subject.objects.all()
+    return render(request, 'resources/AddSlides.html',{"dept":dept,"sub":sub})
+
+
+def list_slides(request):
+    r=Slide.objects.all()
+    dept = Department.objects.all()
+    sub = Subject.objects.all()
+    return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})

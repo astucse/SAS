@@ -8,13 +8,17 @@
     <form action="{% url 'add_video' %}" method="post">
       {% csrf_token %}
       <input type="text" name="url" value="" placeholder="INPUT URL"><br>
-      <!-- TODO: process existing values from db -->
-      <select name="department">
+      <!-- TODO: any ui is better than this -->
+      <select name="dept">
         {% for i in dept %}
           <option value="{{i.id}}">{{i.name}}</option>
         {% endfor%}
       </select>
-      <input type="text" name="subject" placeholder="sub"><br>
+      <select name="sub">
+        {% for i in sub %}
+          <option value="{{i.id}}">{{i.name}}</option>
+        {% endfor%}
+      </select>
       <input type="submit" name="" value="Submit"><br>
     </form>
   </body>

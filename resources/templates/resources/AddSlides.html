@@ -1,0 +1,26 @@
+
+<body style="padding: auto;">
+  <div>
+<form method="POST" enctype="multipart/form-data">
+{% csrf_token %}
+  <label>Department: </label>
+<select name="Department">
+  {% for dep in dept%}
+<option value={{dep.id}}>{{dep.name}}</option>
+  {% endfor %}
+</select><br><br>
+<!-- TODO: Make this Dynamic -->
+  <label>Subject: </label>
+<select name="Subject">
+  {% for subj in sub%}
+<option value={{subj.id}}>{{subj.name}}</option>
+  {% endfor %}
+</select><br><br>
+  <label>Upload Slide: </label>
+<input type="File" placeholder="upload File" name="aslide"><br><br>
+<button type="submit" class="btn btn-primary"> Upload</button>
+</form>
+</div>
+
+</body>
+<!--{{form.as_p}}-->

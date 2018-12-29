@@ -2,8 +2,11 @@ from django.shortcuts import render,redirect
 from urllib.parse import urlparse as u
 from .models import Video,Slide,Handout,Question,Choice
 from account.models import Department,Subject
+from django.core.files.storage import FileSystemStorage
+from .forms import SlideForm
 from itertools import chain
 import pafy
+
 # Create your views here.
 
 def view_video(request):
@@ -101,3 +104,27 @@ def get_videos(request,n=3,s=0):
 def search(term): #returns list of video query_set that match search criteria
     a = list(chain(Video.objects.filter(name__icontains=term),Video.objects.filter(subject__name__icontains=term),Video.objects.filter(department__name__icontains=term)))
     return a
+def add_slides(request):
+    if request.method == 'POST':
+        req=request.POST
+        url=request.FILES['aslide']
+        dept=req['Department']
+        sub=req['Subject']
+        ne = FileSystemStorage()
+        a=ne.save(url.name,url)
+        nm=url.name
+        ns=Slide()
+        ns.file="/Uploads/" + a
+        ns.name=nm
+        ns.department=Department.objects.get(pk=dept)
+        ns.subject=Subject.objects.get(pk=sub)
+        ns.save()
+    dept = Department.objects.all()
+    sub = Subject.objects.all()
+    return render(request, 'resources/AddSlides.html',{"dept":dept,"sub":sub})
+
+def list_slides(request):
+    r=Slide.objects.all()
+    dept = Department.objects.all()
+    sub = Subject.objects.all()
+    return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":s

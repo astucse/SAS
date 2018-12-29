@@ -3,17 +3,17 @@ from django.contrib.auth.models import User
 from account.models import Subject,Department
 # Create your models here.
 
-class Slide():
-    url=models.CharField(max_length=250,blank=True)
+class Slide(models.Model):
+    file=models.CharField(max_length=256)
     name=models.CharField(max_length=55)
-    subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
-    department=models.ForeignKey(Department,on_delete=models.CASCADE)
+    subject=models.ForeignKey(Subject,on_delete=models.CASCADE,related_name="sub")
+    department=models.ForeignKey(Department,on_delete=models.CASCADE,related_name="dept")
     def __str__(self):
         return self.name
 
-class Handout():
+class Handout(models.Model):
     name=models.CharField(max_length=55,blank=True)
-    url=models.CharField(max_length=250)
+    file=models.CharField(max_length=256)
     section=models.IntegerField()
     subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
     department=models.ForeignKey(Department,on_delete=models.CASCADE)

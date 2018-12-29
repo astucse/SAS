@@ -6,4 +6,6 @@ urlpatterns = [
     path('add_video/',views.add_video,name='add_video'),
     path('view_worksheet/',views.view_worksheet,name='view_worksheet'),
     path('add_worksheet/',views.add_worksheet,name='add_worksheet'),
+    path('slides/',views.list_slides,name='list_materials'),
+    path('slides/add_slides',views.add_slides,name='add_slides'),
 ]

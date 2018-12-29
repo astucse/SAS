@@ -125,6 +125,8 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.1/howto/static-files/
 
 STATIC_URL = '/static/'
+MEDIA_URL='/static/Uploads/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/Uploads')
 # STATIC_ROOT = os.path.join(BASE_DIR, 'static/')
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 # TODO: Add login redirect url,

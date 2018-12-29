@@ -2,14 +2,10 @@ from django.shortcuts import render,redirect
 from urllib.parse import urlparse as u
 from .models import Video,Slide,Handout
 from account.models import Department,Subject
-<<<<<<< HEAD
 from django.core.files.storage import FileSystemStorage
 from .forms import SlideForm
-
-=======
 from itertools import chain
 import pafy
->>>>>>> 6460c3adef5bce59181bd8c43cf6d0f1c281d741
 # Create your views here.
 
 def extract_id(url): #extracts the youtube id from any given working youtube link

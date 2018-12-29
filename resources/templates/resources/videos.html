@@ -6,10 +6,8 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta name="description" content="">
-    <meta name="author" content="">
 
-    <title>Portfolio Item - Start Bootstrap Template</title>
+    <title>{{title}}</title>
 
     <!-- Bootstrap core CSS -->
     <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
@@ -24,7 +22,7 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">Start Bootstrap</a>
+        <a class="navbar-brand" href="#">SAS</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
@@ -53,9 +51,7 @@
     <div class="container">
 
       <!-- Portfolio Item Heading -->
-      <h1 class="my-4">Page Heading
-        <small>Secondary Text</small>
-      </h1>
+      <h1 class="my-4">{{title}} </h1>
 
       <!-- Portfolio Item Row -->
       <div class="row">
@@ -65,9 +61,9 @@
         </div>
 
         <div class="col-md-4">
-          <h3 class="my-3">Project Description</h3>
-          <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nam viverra euismod odio, gravida pellentesque urna varius vitae. Sed dui lorem, adipiscing in adipiscing et, interdum nec metus. Mauris ultricies, justo eu convallis placerat, felis enim.</p>
-          <h3 class="my-3">Project Details</h3>
+          <h3 class="my-3">Video Description</h3>
+          <p>{{desc}}</p>
+          <h3 class="my-3">Dowload video</h3>
           <ul>
             {%for i in dlinks%}
             <li><a class="btn-primary" href="{{i.url}}" download="{{title}}">Download {{i.resolution}}</a>  </li>
@@ -79,7 +75,7 @@
       <!-- /.row -->
 
       <!-- Related Projects Row -->
-      <h3 class="my-4">Related Projects</h3>
+      <h3 class="my-4">Related Videos</h3>
       <div class="row">
         <!-- TODO: UIIIIII -->
       {% for i in other %}
@@ -111,5 +107,3 @@
   </body>
 
 </html>
-
-<title>{{title}}</title>

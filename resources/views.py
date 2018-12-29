@@ -31,15 +31,15 @@ def extract_title(url):#extracts the title from  any given working youtube link
 # ----------------------------------------------------
 
 def view_video(request):
-    # extract_description(url)
     try:
-        request.method=='GET' and request.GET['id']
-        id=extract_id(request.GET['id'])
-        print(pafy.new("https://www.youtube.com/watch?v="+id).streams[0].url)
-        return render(request,"resources/videos.html",{"id":extract_id(id),"title":extract_title("https://www.youtube.com/watch?v="+id),'other':get_videos(request=request),'dlinks':pafy.new("https://www.youtube.com/watch?v="+id).streams,})
+        id=request.GET.get('id')
+        video=pafy.new("https://www.youtube.com/watch?v="+id)
+        print(video)
+        return render(request,"resources/videos.html",{"id":id,"title":video.title,'other':get_videos(request=request),'dlinks':video.streams,"desc":video.description})
     except:
         pass
-    return render(request,"resources/videos.html",{"id":extract_id("https://www.youtube.com/watch?v="+id),"title":extract_title("https://www.youtube.com/watch?v="+id),'other':get_videos(request=request),'dlinks':pafy.new("https://www.youtube.com/watch?v="+id).streams[0].url})
+        # return render(request,"resources/videos.html",{"id":extract_id("https://www.youtube.com/watch?v="+id),"title":extract_title("https://www.youtube.com/watch?v="+id),'other':get_videos(request=request),'dlinks':pafy.new("https://www.youtube.com/watch?v="+id).streams[0].url})
+        return redirect('list_videos')
 
 def add_video(request):
     if request.method == 'POST':
@@ -69,7 +69,12 @@ def search(term): #returns list of possible objects that match search criteria
  return a
 def list_videos(request):
     if request.method=='POST':
-        context={'dept':Department.objects.all(),'sub':Subject.objects.all(),'vids':search(request.POST.get('bar',''))}
+        context={
+            'dept':Department.objects.all(),
+            'sub':Subject.objects.all(),
+            'vids':search(request.POST.get('bar','')),
+            'term':request.POST.get('bar',''),
+        }
         return render(request,"resources/list_videos.html",context=context)
     context={'dept':Department.objects.all(),'sub':Subject.objects.all(),'vids':Video.objects.all()}
     return render(request,"resources/list_videos.html",context=context)

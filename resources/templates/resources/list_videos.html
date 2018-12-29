@@ -59,22 +59,23 @@
     </form>
 
     <!-- Page Heading -->
-    <h1 class="my-4">Page Heading
-      <small>Secondary Text</small>
+    {%if term%}
+    <h1 class="my-4">Search results for
+      <small>"{{term}}"</small>
+    {%endif%}
+    <hr>
     </h1>
     {%for i in vids%}
-
     <div class="row">
-      <div class="col-md-6">
+      <div class="col-md-4">
         <a href="/view_video/?id={{i.url}}">
-          <img src="https://img.youtube.com/vi/{{i.url}}/0.jpg" alt="{{i.name}}">
+          <img src="https://img.youtube.com/vi/{{i.url}}/0.jpg" width="300px" height="auto" alt="{{i.name}}">
         </a>
       </div>
       <div class="col-md-4">
         <br>
         <br>
         <a href="/view_video/?id={{i.url}}">{{i.name}}</a>
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laudantium veniam exercitationem expedita laborum at voluptate. Labore, voluptates totam at aut nemo deserunt rem magni pariatur quos perspiciatis atque eveniet unde.</p>
       </div>
     </div>
     <hr>

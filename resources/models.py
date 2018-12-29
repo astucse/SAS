@@ -3,9 +3,20 @@ from django.contrib.auth.models import User
 from account.models import Subject,Department
 # Create your models here.
 
+class Slide():
+    url=models.CharField(max_length=250)
+    subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE)
+
+class Handout():
+    url=models.CharField(max_length=250)
+    section=models.IntegerField()
+    subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
+    department=models.ForeignKey(Department,on_delete=models.CASCADE)
+
 class Question(models.Model):
     question_text=models.TextField()
-    type=models.CharField(max_length=50,choices=(('Multiple Choice','MC'),('Short Answer','SA'),('True or False','TF'),('Fill in the blanks','FITB')))
+    type=models.CharField(max_length=50,choices=(('Multiple Choice','MC'),('Short Answer','SA'),('True or False','TF'),('Fill in the blanks','FITB'),('Flash Card','FC')))
     explanation=models.TextField()
     hint=models.TextField()
     subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
@@ -23,7 +34,7 @@ class Exam(models.Model):
     subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
     department=models.ForeignKey(Department,on_delete=models.CASCADE)
 
-class Videos(models.Model):
+class Video(models.Model):
     url=models.CharField(max_length=250)
     name=models.CharField(max_length=100)
     subject=models.ForeignKey(Subject,on_delete=models.CASCADE)

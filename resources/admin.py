@@ -1,8 +1,8 @@
 from django.contrib import admin
-from .models import Videos,Question,Choice,Exam
+from .models import Video,Question,Choice,Exam
 # Register your models here.
 
-admin.site.register(Videos)
+admin.site.register(Video)
 admin.site.register(Question)
 admin.site.register(Choice)
 admin.site.register(Exam)

@@ -3,6 +3,7 @@ from .models import School,Department,Student,Teacher,Subject
 
 # Register your models here.
 admin.site.register(School)
+admin.site.register(Subject)
 admin.site.register(Department)
 admin.site.register(Student)
 admin.site.register(Teacher)

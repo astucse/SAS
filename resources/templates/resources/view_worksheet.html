@@ -1,0 +1,39 @@
+{% load resources_extras %}
+<form action="{% url 'view_worksheet' %}" method="post">
+  {%csrf_token%}
+  <!-- onchange="alert(this.value)" -->
+  {% if not data%}
+  <select name="chap_choice">
+    {% for i in chap_choices %}
+    <option value="{{i.0}}">{{i.0}}</option>
+    {% endfor %}
+  </select>
+  <input type="submit" name="" value="Get worksheets">
+  {% else %}
+
+  {% for x,i in data%}
+  Question #{{x}}:{{i.question_text}}
+  {% if i.type == 'MC' %}
+  {% for j in i.choices.all %}
+  <br>
+  <input type="radio" name="{{i.id}}" value="{{j.id}}">{{j.choice_text}}
+  {% endfor %}
+  {% elif i.type == 'SA'%}
+  <br>
+  <input type="text" name="{{i.id}}" value="">
+  {% elif i.type == 'TF'%}
+  <br>
+  <input type="radio" name="{{i.id}}" value="True">True
+  <input type="radio" name="{{i.id}}" value="False">False
+  {% elif i.type == 'FITB'%}
+  <br>
+  <input type="text" name="{{i.id}}" value="">
+  {% endif %}
+  <hr>
+  {% endfor %}
+
+  <input type="submit" name="done" value="submit">
+  <input type="hidden" name="chap_choice" value="{{chap}}">
+  {% endif %}
+
+</form>

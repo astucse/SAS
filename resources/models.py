@@ -28,14 +28,14 @@ class Question(models.Model):
     hint=models.TextField()
     subject=models.ForeignKey(Subject,on_delete=models.CASCADE)
     department=models.ForeignKey(Department,on_delete=models.CASCADE)
-    date_uploaded=models.DateField()
+    date_uploaded=models.DateField(auto_now_add=True)
     def __str__(self):
         return self.question_text[:15]
 
 class Choice(models.Model):
     choice_text=models.TextField()
     question=models.ForeignKey(Question,on_delete=models.CASCADE,related_name='choices')
-    answer_to=models.ForeignKey(Question,on_delete=models.CASCADE)
+    answer_to=models.ForeignKey(Question,on_delete=models.CASCADE,related_name='answer',null=True)
     def __str__(self):
         return self.choice_text
 

@@ -157,8 +157,8 @@ def list_slides(request):
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})
-<<<<<<< HEAD
-=======
+#<<<<<<< HEAD
+#=======
 
 #////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -188,4 +188,3 @@ def list_handouts(request):
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/HandoutView.html',{'r':r,"dept":dept,"sub":sub})
->>>>>>> 7b8fc98b80476153e636082a9708baabe7120234

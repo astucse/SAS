@@ -1,0 +1,67 @@
+<form action="{% url 'add_worksheet' %}" method="post">
+  {% csrf_token %}
+  <br>
+    <!-- page1
+    select department subject chapter
+    pos a
+    page 2
+    select question_type question_text
+    page 3
+    select choices explanation hint
+    go back out, add to db and reset
+    go to a -->
+
+    {% if q_type_choice %}
+
+      {% if q_type_choice == 'MC' %}
+        <textarea name="choiceAnswer" rows="8" cols="80" placeholder="Answer Here"></textarea>
+        <textarea name="choice2" rows="8" cols="80" placeholder="Choice Here"></textarea>
+        <textarea name="choice3" rows="8" cols="80" placeholder="Choice Here"></textarea>
+        <textarea name="choice4" rows="8" cols="80" placeholder="Choice Here"></textarea>
+      {% elif q_type_choice == 'SA' %}
+        <textarea name="choiceAnswer" rows="8" cols="80"></textarea>
+      {% elif q_type_choice == 'FITB' %}
+        <textarea name="choiceAnswer" rows="8" cols="80"></textarea>
+      {% else %}
+        <select name="choiceAnswer">
+          <option value="T">True</option>
+          <option value="F">False</option>
+        </select>
+      {% endif%}
+      <textarea name="explain" rows="8" cols="80" placeholder="Explanation(Optional)"></textarea>
+      <textarea name="hint" rows="8" cols="80" placeholder="Hint(Optional)"></textarea>
+      <input type="submit" value="finish">
+      <input type="hidden" name="dept" value="{{dept_choice.id}}">
+      <input type="hidden" name="sub" value="{{sub_choice.id}}">
+      <input type="hidden" name="chap" value="{{chap_choice}}">
+      <input type="hidden" name="q_type" value="{{q_text_choice}}">
+      <input type="hidden" name="q_text" value="{{q_type_choice}}">
+    {% elif dept_choice %}
+
+      <select name="q_type">
+        {% for i in types %}
+          <option value="{{i.1}}">{{i.0}}</option>
+        {% endfor %}
+      </select>
+      <textarea name="q_text" rows="4" cols="40" placeholder="Question HERE"></textarea>
+      <input type="submit" name="" value="next">
+      <input type="hidden" name="dept" value="{{dept_choice.id}}">
+      <input type="hidden" name="sub" value="{{sub_choice.id}}">
+      <input type="hidden" name="chap" value="{{chap_choice}}">
+    {% else %}
+
+
+    <select name="dept">
+      {% for i in dept%}
+        <option value="{{i.id}}">{{i.name}}</option>
+      {% endfor %}
+    </select>
+    <select  name="sub">
+      {% for i in sub%}
+        <option value="{{i.id}}">{{i.name}}</option>
+      {% endfor %}
+    </select>
+    <input type="text" name="chap" value="" required>
+    <input type="submit" name="" value="next">
+    {% endif %}
+</form>

@@ -26,8 +26,9 @@ def add_video(request):
         dept=req['dept']
         sub=req['sub']
         new_video=Video()
-        new_video.url=extract_id(url)
-        new_video.name=extract_title(url)
+        vid=pafy.new(url)
+        new_video.url=vid.videoid
+        new_video.name=vid.title
         new_video.department=Department.objects.get(pk=dept)
         new_video.subject=Subject.objects.get(pk=sub)
         new_video.save()
@@ -47,8 +48,31 @@ def list_videos(request):
     context={'dept':Department.objects.all(),'sub':Subject.objects.all(),'vids':Video.objects.all()}
     return render(request,"resources/list_videos.html",context=context)
 
-def view_worksheet(request):
+def do_worksheet(request):
     pass
+def view_worksheet(request):
+    context={
+    'chap_choices':Question.objects.order_by().values_list('chapter').distinct(),
+    }
+    if request.method == 'POST':
+        context['chap']=request.POST.get("chap_choice","")
+        context['data']=enumerate(Question.objects.filter(chapter=context['chap']),1)
+        # TODO: CHECK IF ANSWER IS CORRECT
+    #     context["v"]=[]
+    #     for i,j in request.POST.lists():
+    #         try:
+    #             # print(Question.objects.filter(id=i))
+    #             q=Question.objects.filter(id=i)
+    #             context[i+"_v"]="Wrong"
+    #             if q.answer == Choice.objects.filter(id=context[i]):
+    #                 context["v"].append("Correct")
+    #             else:
+    #                 context["v"].append("Wrong")
+    #         except Exception as x:
+    #             # print(x)
+    #             pass
+    # print(context)
+    return render(request,"resources/view_worksheet.html",context)
 
 def add_worksheet(request):
     context={'dept':Department.objects.all(),'sub':Subject.objects.all(),'range4':range(4),'vids':Video.objects.all(),'types':(('Multiple Choice','MC'),('Short Answer','SA'),('True or False','TF'),('Fill in the blanks','FITB'))}
@@ -59,16 +83,17 @@ def add_worksheet(request):
             context['chap_choice']=request.POST.get("chap","")
             context['q_type_choice']=request.POST.get("q_type","")
             context['q_text_choice']=request.POST.get("q_text","")
-            if "hint" in request.POST:
+            if not request.POST.get("choiceAnswer","") == "":
                 print(request.POST)
                 q=Question()
-                q.department=Department.objects.get(pk=request.POST.get("dept",""))
-                q.subject=Subject.objects.get(pk=request.POST.get("sub",""))
+                q.department=Department.objects.get(id=request.POST.get("dept",""))
+                q.subject=Subject.objects.get(id=request.POST.get("sub",""))
                 q.chapter=request.POST.get("chap","")
                 q.type=request.POST.get("q_type","")
                 q.question_text=request.POST.get("q_text","")
                 q.hint=request.POST.get("hint","")
                 q.explanation=request.POST.get("explain","")
+                q.save()
                 cA=Choice()
                 cA.choice_text=request.POST.get("choiceAnswer","")
                 cA.question=q
@@ -83,10 +108,14 @@ def add_worksheet(request):
                     c4=Choice()
                     c4.choice_text=request.POST.get("choice4","")
                     c4.question=q
+                    c2.save()
+                    c3.save()
+                    c4.save()
+                cA.save()
                 del context['chap_choice']
                 del context['q_type_choice']
                 del context['q_text_choice']
-
+                print(context)
         except Exception as x:
             print(x)
     return render(request,"resources/add_worksheet.html" ,context=context)
@@ -127,4 +156,4 @@ def list_slides(request):
     r=Slide.objects.all()
     dept = Department.objects.all()
     sub = Subject.objects.all()
-    return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":s
+    return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})

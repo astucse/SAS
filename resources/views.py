@@ -157,3 +157,35 @@ def list_slides(request):
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})
+<<<<<<< HEAD
+=======
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+
+def add_handouts(request):
+    if request.method == 'POST':
+        req=request.POST
+        url=request.FILES['aslide']
+        dept=req['Department']
+        sub=req['Subject']
+        sec=req['sec']
+        ne = FileSystemStorage()
+        a=ne.save(url.name,url)
+        nm=url.name
+        ns=Handout()
+        ns.file="/Uploads/" + a
+        ns.name=nm
+        ns.section=sec
+        ns.department=Department.objects.get(pk=dept)
+        ns.subject=Subject.objects.get(pk=sub)
+        ns.save()
+    dept = Department.objects.all()
+    sub = Subject.objects.all()
+    return render(request, 'resources/AddHandouts.html',{"dept":dept,"sub":sub})
+
+def list_handouts(request):
+    r=Handout.objects.all()
+    dept = Department.objects.all()
+    sub = Subject.objects.all()
+    return render(request,'resources/HandoutView.html',{'r':r,"dept":dept,"sub":sub})
+>>>>>>> 7b8fc98b80476153e636082a9708baabe7120234

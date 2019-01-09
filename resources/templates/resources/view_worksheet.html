@@ -10,26 +10,26 @@
   </select>
   <input type="submit" name="" value="Get worksheets">
   {% else %}
-
+  <!-- data={1:q,2:w,3:e,} -->
   {% for x,i in data%}
-  Question #{{x}}:{{i.question_text}}
-  {% if i.type == 'MC' %}
-  {% for j in i.choices.all %}
-  <br>
-  <input type="radio" name="{{i.id}}" value="{{j.id}}">{{j.choice_text}}
-  {% endfor %}
-  {% elif i.type == 'SA'%}
-  <br>
-  <input type="text" name="{{i.id}}" value="">
-  {% elif i.type == 'TF'%}
-  <br>
-  <input type="radio" name="{{i.id}}" value="True">True
-  <input type="radio" name="{{i.id}}" value="False">False
-  {% elif i.type == 'FITB'%}
-  <br>
-  <input type="text" name="{{i.id}}" value="">
-  {% endif %}
-  <hr>
+    Question #{{x}}: {{i.question_text}}
+    {% if i.type == 'MC' %}
+      {% for j in i.choices.all %}
+        <br>
+        <input type="radio" name="{{i.id}}" value="{{j.id}}">{{j.choice_text}}
+      {% endfor %}
+      {% elif i.type == 'SA'%}
+        <br>
+        <input type="text" name="{{i.id}}" value="">
+      {% elif i.type == 'TF'%}
+        <br>
+        <input type="radio" name="{{i.id}}" value="T">True
+        <input type="radio" name="{{i.id}}" value="F">False
+      {% elif i.type == 'FITB'%}
+        <br>
+        <input type="text" name="{{i.id}}" value="">
+    {% endif %}
+    <hr>
   {% endfor %}
 
   <input type="submit" name="done" value="submit">

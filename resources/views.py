@@ -58,20 +58,16 @@ def view_worksheet(request):
         context['chap']=request.POST.get("chap_choice","")
         context['data']=enumerate(Question.objects.filter(chapter=context['chap']),1)
         # TODO: CHECK IF ANSWER IS CORRECT
-    #     context["v"]=[]
-    #     for i,j in request.POST.lists():
-    #         try:
-    #             # print(Question.objects.filter(id=i))
-    #             q=Question.objects.filter(id=i)
-    #             context[i+"_v"]="Wrong"
-    #             if q.answer == Choice.objects.filter(id=context[i]):
-    #                 context["v"].append("Correct")
-    #             else:
-    #                 context["v"].append("Wrong")
-    #         except Exception as x:
-    #             # print(x)
-    #             pass
-    # print(context)
+        for i,j in request.POST.lists():
+            try:
+                # print(Question.objects.filter(id=i))
+                q=Question.objects.filter(id=i)[0]
+                if q.answer.all()[0].choice_text == request.POST.get(i,''):
+                    print("ANSWERED ",i)
+            except Exception as x:
+                # print(x)
+                pass
+    # print(request.POST)
     return render(request,"resources/view_worksheet.html",context)
 
 def add_worksheet(request):
@@ -157,10 +153,6 @@ def list_slides(request):
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})
-<<<<<<< HEAD
-=======
-
-#////////////////////////////////////////////////////////////////////////////////////////////
 
 def add_handouts(request):
     if request.method == 'POST':
@@ -188,4 +180,3 @@ def list_handouts(request):
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/HandoutView.html',{'r':r,"dept":dept,"sub":sub})
->>>>>>> 7b8fc98b80476153e636082a9708baabe7120234

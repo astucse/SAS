@@ -1,17 +1,67 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title>Register</title>
-  </head>
-  <body>
-    <form action="{% url 'register' %}" method="post">
-      {% csrf_token %}
-      {% if form.errors %}
-      <p>Error</p>
-      {% endif %}
-      {{form}}
-      <input type="submit"  value="Register">
-    </form>
-  </body>
+{% load static %}
+<html>
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/reg.css'%}">
+</head>
+<body>
+
+  <form method="POST" >
+    {% csrf_token %}
+    <div class="container">
+      <h1>Register</h1>
+      <p>Please fill in this form to create an account.</p>
+
+
+      <label for="fn"><b>First Name:</b></label><br>
+      <input type="text" placeholder="Enter First_Name" name="fname" required><br>
+      <label for="ln"><b>Last Name:</b></label><br>
+      <input type="text" placeholder="Enter Last_Name" name="lname" required><br>
+      <label for="sex"><b>Gender:</b></label><br>
+      <div class="radio">
+        <input  type="radio" name="gender" value="male"> Male
+        <input type="radio" name="gender" value="female"> Female<br>
+      </div>
+      <br>
+      <div >
+
+        <select name="dp" class="col">
+          <option value="Null">
+            --Department--
+          </option>
+          {% for dep in dept %}
+          <option value={{dep.id}}>
+            {{dep.name}}
+          </option>
+          {% endfor %}
+        </select>
+        <br><br>
+        <select name="sub" class="col">
+          <option value="Null">
+            --Subject--
+          </option>
+          {% for dep in sub %}
+          <option id="list"value={{dep.id}}>
+            {{dep.name}}
+          </option>
+          {% endfor %}
+        </select>
+      </div><br>
+      <label for="year"><b>ClassYear:</b></label><br>
+      <input type="number" min=1 max=5 placeholder="Class Year" name="year"  required><br>
+      <label for="ln"><b>Section:</b></label><br>
+      <input type="number" min="1" max="25" placeholder="Section" name="section" required><br>
+
+      <label for="un"><b>Username:</b></label><br>
+      <input type="text" placeholder="Enter Username" name="usn" required><br>
+      <label for="psw"><b>Password:</b></label><br>
+      <input type="password" placeholder="Enter Password" name="psw" required><br>
+      <label for="psw-repeat"><b>Repeat Password:</b></label><br>
+      <input type="password" placeholder="Repeat Password" name="psw-repeat" required><br>
+
+      <button type="submit" class="registerbtn">Register</button>
+    </div>
+  </form>
+
+</body>
 </html>

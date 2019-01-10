@@ -153,6 +153,13 @@ def list_slides(request):
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})
+<<<<<<< HEAD
+=======
+#<<<<<<< HEAD
+#=======
+
+#////////////////////////////////////////////////////////////////////////////////////////////
+>>>>>>> a532084ddb069e9e0f3c56b5402b46a64b2d3050
 
 def add_handouts(request):
     if request.method == 'POST':

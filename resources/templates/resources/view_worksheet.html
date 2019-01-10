@@ -16,20 +16,22 @@
     {% if i.type == 'MC' %}
       {% for j in i.choices.all %}
         <br>
-        <input type="radio" name="{{i.id}}" value="{{j.id}}">{{j.choice_text}}
+        <input type="radio" name="{{i.id}}" value="{{j.choice_text}}" required>{{j.choice_text}}
+
       {% endfor %}
       {% elif i.type == 'SA'%}
         <br>
-        <input type="text" name="{{i.id}}" value="">
+        <input type="text" name="{{i.id}}" value="" required>
       {% elif i.type == 'TF'%}
         <br>
-        <input type="radio" name="{{i.id}}" value="T">True
-        <input type="radio" name="{{i.id}}" value="F">False
+        <input type="radio" name="{{i.id}}" value="T" required>True
+        <input type="radio" name="{{i.id}}" value="F" required>False
       {% elif i.type == 'FITB'%}
         <br>
-        <input type="text" name="{{i.id}}" value="">
+        <input type="text" name="{{i.id}}" value="" required>
     {% endif %}
     <hr>
+  <input type="hidden" name="answering" value="true">
   {% endfor %}
 
   <input type="submit" name="done" value="submit">

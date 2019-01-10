@@ -1,0 +1,11 @@
+YOU HAVE ANSWERED {{answered_num}} ITEMS CORRECTLY <br><br>
+  {% for i in answered%}
+  Question {{i}} <br><p style="color:green">  Answer {{i.answer.get.choice_text}} </p><hr>
+  {%endfor%}
+
+YOU HAVE INCORRECTLY ANSWERED {{unanswered_num}} ITEMS  <br>
+<div class="red">
+  {% for i in  not_answered%}
+  Question {{i}} <br><p style="color:red">  Answer {{i.answer.get.choice_text}} </p><hr>
+  {%endfor%}
+</div>

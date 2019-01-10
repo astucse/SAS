@@ -57,18 +57,28 @@ def view_worksheet(request):
     if request.method == 'POST':
         context['chap']=request.POST.get("chap_choice","")
         context['data']=enumerate(Question.objects.filter(chapter=context['chap']),1)
-        # TODO: CHECK IF ANSWER IS CORRECT
-        for i,j in request.POST.lists():
-            try:
-                # print(Question.objects.filter(id=i))
-                q=Question.objects.filter(id=i)[0]
-                if q.answer.all()[0].choice_text == request.POST.get(i,''):
-                    print("ANSWERED ",i)
-            except Exception as x:
-                # print(x)
-                pass
+        if request.POST.get('answering','')=='true':
+            cont={'answered':[],'not_answered':[]} #obj of answered questions
+            # TODO: CHECK IF ANSWER IS CORRECT
+            for i,j in request.POST.lists():
+                try:
+                    # print(Question.objects.filter(id=i))
+                    q=Question.objects.filter(id=i)[0]
+                    # print(request.POST)
+                    # print(q.answer.get().choice_text)
+                    if q.answer.get().choice_text == request.POST.get(i,''):
+                        cont['answered'].append(q)
+                        cont['']
+                    else:
+                        cont['not_answered'].append(q)
+                except Exception as x:
+                    # print(x)
+                    pass
+            cont['answered_num']=len(cont['answered'])
+            cont['unanswered_num']=len(cont['not_answered'])
+            return render(request,'resources/show_answered.html',context=cont)
     # print(request.POST)
-    return render(request,"resources/view_worksheet.html",context)
+    return render(request,"resources/view_worksheet.html",context=context)
 
 def add_worksheet(request):
     context={'dept':Department.objects.all(),'sub':Subject.objects.all(),'range4':range(4),'vids':Video.objects.all(),'types':(('Multiple Choice','MC'),('Short Answer','SA'),('True or False','TF'),('Fill in the blanks','FITB'))}
@@ -153,13 +163,6 @@ def list_slides(request):
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})
-<<<<<<< HEAD
-=======
-#<<<<<<< HEAD
-#=======
-
-#////////////////////////////////////////////////////////////////////////////////////////////
->>>>>>> a532084ddb069e9e0f3c56b5402b46a64b2d3050
 
 def add_handouts(request):
     if request.method == 'POST':

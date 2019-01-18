@@ -1,79 +1,26 @@
-<!DOCTYPE html>
-<html lang="en" dir="ltr">
-  <head>
-    <meta charset="utf-8">
-    <title></title>
-  </head>
-  <style media="screen">
-    @import "bourbon";
+{% load static %}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/reg0.css'%}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+<div>
+{%if not user.is_authenticated%}
 
-body {
-	background: #eee !important;
-}
-
-.wrapper {
-	margin-top: 80px;
-  margin-bottom: 80px;
-}
-
-.form-signin {
-  max-width: 380px;
-  padding: 15px 35px 45px;
-  margin: 0 auto;
-  background-color: #fff;
-  border: 1px solid rgba(0,0,0,0.1);
-
-  .form-signin-heading,
-	.checkbox {
-	  margin-bottom: 30px;
-	}
-
-	.checkbox {
-	  font-weight: normal;
-	}
-
-	.form-control {
-	  position: relative;
-	  font-size: 16px;
-	  height: auto;
-	  padding: 10px;
-		@include box-sizing(border-box);
-
-		&:focus {
-		  z-index: 2;
-		}
-	}
-	input[type="text"] {
-	  margin-bottom: -1px;
-	  border-bottom-left-radius: 0;
-	  border-bottom-right-radius: 0;
-	}
-
-	input[type="password"] {
-	  margin-bottom: 20px;
-	  border-top-left-radius: 0;
-	  border-top-right-radius: 0;
-	}
-}
-
-  </style>
-  <body>
-    <div class="wrapper">
-      {% if next %}
-        <p>You cannot accesss this page!</p>
-      {% endif %}
-  <form class="form-signin" action="{% url 'login' %}" method='POST'>
-    <h2 class="form-signin-heading">Please login</h2>
-    {% csrf_token %}
-    <div class="form-control">
-      Username: {{form.username}}
-    </div>
-    <div class="form-control">
-      Password: &nbsp{{form.password}}
-    </div>
-    <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
-    <input type="hidden" value="{{next}}">
-  </form>
+<form action="#" method="post">
+  {%csrf_token%}
+  <input type="text" placeholder="Username" name=username> <br>
+  <input type="Password" placeholder="password" name=password> <br>
+  <input type="checkbox"name= "RememberMe"> Remember Me <br>
+  <input type="submit" value="Login">
+</form>
+{%else%}
+{{user.username}}
+<form method="Get">
+    <input type="submit">
+</form>
+{%endif%}
 </div>
-  </body>
+</body>
 </html>

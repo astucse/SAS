@@ -9,7 +9,8 @@ urlpatterns = [
     path('add_worksheet/',views.add_worksheet,name='add_worksheet'),
     path('do_worksheet/',views.do_worksheet,name='do_worksheet'),
     path('slides/',views.list_slides,name='list_materials'),
-    path('slides/add_slides',views.add_slides,name='add_slides'),
+    path('add_slides/',views.add_slides,name='add_slides'),
     path('handouts/',views.list_handouts,name='list_handouts'),
-    path('handouts/add_handouts',views.add_handouts,name='add_handouts'),
+    path('add_handouts/',views.add_handouts,name='add_handouts'),
+    path('nav/',views.nav,name='nav'),
 ]

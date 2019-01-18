@@ -1,0 +1,71 @@
+{% load static %}
+<html>
+<head>
+<link rel="stylesheet" type="text/css" href="{% static 'css/reg.css'%}">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+
+<div>
+  <form action="#" method="POST">
+    {%csrf_token%}
+    <input type="text" id="fname" name="firstname" placeholder="Firstname" required>
+    <input type="text" id="lname" name="lastname" placeholder="Lastname" required>
+    <label>Gender:</label><br>
+    <input  type="radio" name="gender" value="male"> Male
+    <input type="radio" name="gender" value="female"> Female<br>
+    <select name="dp" class="col">
+      <option value="Null">
+        --Department--
+      </option>
+      {% for dep in dept %}
+      <option value={{dep.id}}>
+        {{dep.name}}
+      </option>
+      {% endfor %}
+    </select>
+    <br>
+    <select name="sub" class="col">
+      <option value="Null">
+        --Subject--
+      </option>
+      {% for dep in sub %}
+      <option id="list"value={{dep.id}}>
+        {{dep.name}}
+      </option>
+      {% endfor %}
+    </select>
+    <input type="number" min=1 max=5 placeholder="Class Year" name="year"  required>
+    <input type="number" min="1" max="25" placeholder="Section" name="section" required><br>
+
+    <input type="text" id="uname" name="username" placeholder="Username" onkeyup="xxx()" required> <span id="test"></span>
+    <input type="Password" id="Pass" name="Password" placeholder="Password" required>
+    <input type="Password" id="cPass" name="ConfirmPassword" placeholder="Confirm Password" onkeyup="CheckName()" required>
+	<span id="cpassw"></span>
+    <input type="submit" value="Submit" name="Submit">
+  </form>
+</div>
+-->
+<script>
+function CheckName(){
+			var password= document.getElementById('Pass').value;
+			var cpassword= document.getElementById('cPass').value;
+			if(password===cpassword){
+			document.getElementById('cpassw').innerHTML="";
+			}
+			else if(password!=cpassword){
+			document.getElementById('cpassw').innerHTML="<small style='Color: red;'>*Passwords Don't Match</small>";
+}
+		}
+</script>
+<!--
+<script>
+function xxx(){
+	$.get("SearchQuery.php",{Username: (#uname).val()},function(data){
+			document.getElementById('test').innerHTML=document.getElementById('uname').value;
+	   });
+}
+</script>-->
+</body>
+</html>

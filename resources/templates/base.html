@@ -34,6 +34,7 @@
           <li class="nav-item">
             <a class="nav-link" href="{% url 'list_slides' %}">Slides</a>
           </li>
+          {%if request.user.is_staff%}
           <li class='dropdown'>
             <a class="dropdown-toggle nav-link" data-toggle="dropdown" style="display:nonee">Admin Tools<span class="caret"></span></a>
             <ul class="dropdown-menu bg-dark">
@@ -43,6 +44,16 @@
               <li ><a class="nav-link"  href="{% url 'add_worksheet' %}">Add Worksheet Questions</a></li>
             </ul>
           </li>
+          {%endif%}
+          {%if request.user.is_authenticated%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'logout' %}">Logout({{request.user.first_name}} {{request.user.last_name}})</a>
+          </li>
+          {%else%}
+          <li class="nav-item">
+            <a class="nav-link" href="{% url 'login' %}">Login</a>
+          </li>
+          {%endif%}
           </ul>
         </div>
       </div>

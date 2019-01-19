@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'SAS.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'SAS',
+        'NAME': 'sos',
         'USER': 'django',
         'PASSWORD': '!4Hay-ree',
         'SERVER': 'localhost',

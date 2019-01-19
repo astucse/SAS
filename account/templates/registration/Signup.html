@@ -1,71 +1,76 @@
-{% load static %}
-<html>
+{%load static%}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
-<link rel="stylesheet" type="text/css" href="{% static 'css/reg.css'%}">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <!-- Bootstrap core CSS -->
+  <link href="{% static 'vendor/bootstrap/css/bootstrap.min.css' %}" rel="stylesheet">
+
 </head>
+
 <body>
-
-
-<div>
-  <form action="#" method="POST">
-    {%csrf_token%}
-    <input type="text" id="fname" name="firstname" placeholder="Firstname" required>
-    <input type="text" id="lname" name="lastname" placeholder="Lastname" required>
-    <label>Gender:</label><br>
-    <input  type="radio" name="gender" value="male"> Male
-    <input type="radio" name="gender" value="female"> Female<br>
-    <select name="dp" class="col">
-      <option value="Null">
-        --Department--
-      </option>
-      {% for dep in dept %}
-      <option value={{dep.id}}>
-        {{dep.name}}
-      </option>
-      {% endfor %}
-    </select>
-    <br>
-    <select name="sub" class="col">
-      <option value="Null">
-        --Subject--
-      </option>
-      {% for dep in sub %}
-      <option id="list"value={{dep.id}}>
-        {{dep.name}}
-      </option>
-      {% endfor %}
-    </select>
-    <input type="number" min=1 max=5 placeholder="Class Year" name="year"  required>
-    <input type="number" min="1" max="25" placeholder="Section" name="section" required><br>
-
-    <input type="text" id="uname" name="username" placeholder="Username" onkeyup="xxx()" required> <span id="test"></span>
-    <input type="Password" id="Pass" name="Password" placeholder="Password" required>
-    <input type="Password" id="cPass" name="ConfirmPassword" placeholder="Confirm Password" onkeyup="CheckName()" required>
-	<span id="cpassw"></span>
-    <input type="submit" value="Submit" name="Submit">
-  </form>
+<div class="container text-center" style="width:500px">
+  <h2>Signup</h2>
+<form class="form-control" action="#" method="POST">
+  {%csrf_token%}
+  <input class="form-control" type="text" id="fname" name="firstname" placeholder="Firstname" required>
+  <input class="form-control" type="text" id="lname" name="lastname" placeholder="Lastname" required>
+  <label>Gender:</label><br>
+  <input type="radio" name="gender" value="male"> Male
+  <input type="radio" name="gender" value="female"> Female <hr>
+  <select class="form-control" name="dp" class="col">
+    <option value="Null">
+      --Department--
+    </option>
+    {% for dep in dept %}
+    <option value={{dep.id}}>
+      {{dep.name}}
+    </option>
+    {% endfor %}
+  </select>
+  <select class="form-control" name="sub" class="col">
+    <option value="Null">
+      --Subject--
+    </option>
+    {% for dep in sub %}
+    <option class="form-control" id="list"value={{dep.id}}>
+      {{dep.name}}
+    </option>
+    {% endfor %}
+  </select>
+  <input class="form-control" type="number" min=1 max=5 placeholder="Class Year" name="year"  required>
+  <input class="form-control" type="number" min="1" max="25" placeholder="Section" name="section" required>
+  <hr>
+  <input class="form-control" type="text" id="uname" name="username" placeholder="Username" onkeyup="xxx()" required> <span id="test"></span>
+  <input class="form-control" type="Password" id="Pass" name="Password" placeholder="Password" required>
+  <input class="form-control" type="Password" id="cPass" name="ConfirmPassword" placeholder="Confirm Password" onkeyup="CheckName()" required>
+  <span id="cpassw"></span><br>
+  <input id='signupbtn' type="submit" value="Signup" name="Submit">
+  <p>If you already have an account you can <a href="{%url 'login'%}">login here</a></p>
+</form>
 </div>
--->
+
 <script>
 function CheckName(){
-			var password= document.getElementById('Pass').value;
-			var cpassword= document.getElementById('cPass').value;
-			if(password===cpassword){
-			document.getElementById('cpassw').innerHTML="";
-			}
-			else if(password!=cpassword){
-			document.getElementById('cpassw').innerHTML="<small style='Color: red;'>*Passwords Don't Match</small>";
+  var password= document.getElementById('Pass').value;
+  var cpassword= document.getElementById('cPass').value;
+  if(password===cpassword){
+    document.getElementById('cpassw').innerHTML="";
+    document.getElementById('signupbtn').removeAttribute('disabled');
+  }
+  else if(password!=cpassword){
+    document.getElementById('cpassw').innerHTML="<small style='Color: red;'>*Passwords Don't Match</small>";
+    document.getElementById('signupbtn').setAttribute('disabled','');
+  }
 }
-		}
 </script>
-<!--
-<script>
-function xxx(){
-	$.get("SearchQuery.php",{Username: (#uname).val()},function(data){
-			document.getElementById('test').innerHTML=document.getElementById('uname').value;
-	   });
-}
-</script>-->
+<!-- Bootstrap core JavaScript -->
+<script src="{% static 'vendor/jquery/jquery.min.js' %}"></script>
+<script src="{% static 'vendor/bootstrap/js/bootstrap.bundle.min.js' %}"></script>
 </body>
+
+
 </html>

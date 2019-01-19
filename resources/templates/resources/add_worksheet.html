@@ -56,12 +56,12 @@
     {% else %}
 
 
-    <select class="form-control col-md-5" name="dept">
+    <select class="form-control col-md-5" placeholder="department" name="dept">
       {% for i in dept%}
         <option value="{{i.id}}">{{i.name}}</option>
       {% endfor %}
     </select>
-    <select  class="form-control col-md-5" name="sub">
+    <select  class="form-control col-md-5" placeholder="Subject" name="sub">
       {% for i in sub%}
         <option value="{{i.id}}">{{i.name}}</option>
       {% endfor %}

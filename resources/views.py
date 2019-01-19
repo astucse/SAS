@@ -12,10 +12,12 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 
 # Create your views here.
+@login_required(login_url='login')
+
 def index(request):
     return render(request,'resources/home.html',{})
 
-@login_required
+@login_required(login_url='login')
 def view_video(request):
     try:
         id=request.GET.get('id')
@@ -27,7 +29,7 @@ def view_video(request):
         # return render(request,"resources/videos.html",{"id":extract_id("https://www.youtube.com/watch?v="+id),"title":extract_title("https://www.youtube.com/watch?v="+id),'other':get_videos(request=request),'dlinks':pafy.new("https://www.youtube.com/watch?v="+id).streams[0].url})
         return redirect('list_videos')
 
-@login_required
+@login_required(login_url='login')
 def add_video(request):
     if not user.is_authenticated:
         if request.method == 'POST':
@@ -48,7 +50,7 @@ def add_video(request):
     else:
         return render(request,"resources/nav.html")
 
-@login_required
+@login_required(login_url='login')
 def list_videos(request):
     if request.method=='POST':
         context={
@@ -61,8 +63,7 @@ def list_videos(request):
     context={'dept':Department.objects.all(),'sub':Subject.objects.all(),'vids':Video.objects.all()}
     return render(request,"resources/list_videos.html",context=context)
 
-def do_worksheet(request):
-    pass
+@login_required(login_url='login')
 def view_worksheet(request):
     context={
     'chap_choices':Question.objects.order_by().values_list('chapter').distinct(),
@@ -93,7 +94,7 @@ def view_worksheet(request):
     # print(request.POST)
     return render(request,"resources/view_worksheet.html",context=context)
 
-@login_required
+@login_required(login_url='login')
 def add_worksheet(request):
     context={'dept':Department.objects.all(),'sub':Subject.objects.all(),'range4':range(4),'vids':Video.objects.all(),'types':(('Multiple Choice','MC'),('Short Answer','SA'),('True or False','TF'),('Fill in the blanks','FITB'))}
     if request.method=="POST":
@@ -144,18 +145,16 @@ def add_worksheet(request):
 # TODO: get related and same tagged videos
 # TODO: filter and search on videos
 
-@login_required
 def get_videos(request,n=3,s=0):
     lst=[]
     for i in range(min(n,len(Video.objects.all()))):
         lst.append(Video.objects.all()[i+s])
     return lst
 
-@login_required
 def search(term): #returns list of video query_set that match search criteria
     a = list(chain(Video.objects.filter(name__icontains=term),Video.objects.filter(subject__name__icontains=term),Video.objects.filter(department__name__icontains=term)))
     return a
-@login_required
+@login_required(login_url='login')
 def add_slides(request):
     if request.method == 'POST':
         req=request.POST
@@ -175,14 +174,14 @@ def add_slides(request):
     sub = Subject.objects.all()
     return render(request, 'resources/AddSlides.html',{"dept":dept,"sub":sub})
 
-@login_required
+@login_required(login_url='login')
 def list_slides(request):
     r=Slide.objects.all()
     dept = Department.objects.all()
     sub = Subject.objects.all()
     return render(request,'resources/SlideView.html',{'r':r,"dept":dept,"sub":sub})
 
-@login_required
+@login_required(login_url='login')
 def add_handouts(request):
     if request.method == 'POST':
         req=request.POST
@@ -204,7 +203,7 @@ def add_handouts(request):
     sub = Subject.objects.all()
     return render(request, 'resources/AddHandouts.html',{"dept":dept,"sub":sub})
 
-@login_required
+@login_required(login_url='login')
 def list_handouts(request):
     r=Handout.objects.all()
     dept = Department.objects.all()

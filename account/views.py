@@ -4,7 +4,7 @@ from django.contrib.auth import authenticate,login,logout
 from .models import Department,School,User,Profile
 from django.contrib.auth.decorators import login_required, permission_required
 # Create your views here.
-@login_required
+@login_required(login_url='login')
 def index(request):
     if(request.method=='POST'):
             logout(request)
@@ -41,7 +41,11 @@ def signup(request):
     dept = Department.objects.all()
     sub = School.objects.all()
     return render(request,"registration/Signup.html",{"dept":dept,"sub":sub})
-def test(request):
+@login_required(login_url='login')
+def _logout(request):
+    logout(request)
+    return redirect('index')
+def _login(request):
     x="--"
     if(request.method=='POST'):
         req=request.POST
@@ -51,7 +55,7 @@ def test(request):
             user=authenticate(username=un,password=pw)
             if user is not None:
                 login(request,user)
-                return render(request,"registration/test.html")
+                return redirect('index')
             else:
                 x="Wrong Username Or Password"
                 return render(request,"registration/test.html",{x:x})

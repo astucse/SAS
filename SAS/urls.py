@@ -20,9 +20,4 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('resources.urls')),
     path('',include('account.urls')),
-<<<<<<< HEAD
-=======
-    path('accounts/',include('django.contrib.auth.urls')),
-    path('resources/',include('resources.urls')),
->>>>>>> a1f2d5f10f9dd18e584e388160d7e4cfba27f364
 ]

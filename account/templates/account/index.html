@@ -1,5 +1,9 @@
 {%if not user.is_authenticated%}
-1
+<h1>NotLoggedin<h1>
 {%else%}
 {{user.username}}
+<form method="post">
+  {% csrf_token %}
+    <input type="submit">
+</form>
 {%endif%}

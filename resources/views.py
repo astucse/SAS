@@ -8,13 +8,16 @@ from itertools import chain
 import pafy
 
 # Create your views here.
+def index(request):
+    return render(request,'resources/home.html',{})
 
 def view_video(request):
     try:
         id=request.GET.get('id')
         video=pafy.new("https://www.youtube.com/watch?v="+id)
         return render(request,"resources/videos.html",{"id":id,"title":video.title,'other':get_videos(request=request),'dlinks':video.streams,"desc":video.description})
-    except:
+    except Exception as x:
+        print(x)
         pass
         # return render(request,"resources/videos.html",{"id":extract_id("https://www.youtube.com/watch?v="+id),"title":extract_title("https://www.youtube.com/watch?v="+id),'other':get_videos(request=request),'dlinks':pafy.new("https://www.youtube.com/watch?v="+id).streams[0].url})
         return redirect('list_videos')
@@ -56,7 +59,7 @@ def view_worksheet(request):
     }
     if request.method == 'POST':
         context['chap']=request.POST.get("chap_choice","")
-        context['data']=enumerate(Question.objects.filter(chapter=context['chap']),1)
+        context['data']=enumerate(Question.objects.filter(chapter=context['chap']).filter(chapter=context['chap']),1)
         if request.POST.get('answering','')=='true':
             cont={'answered':[],'not_answered':[]} #obj of answered questions
             # TODO: CHECK IF ANSWER IS CORRECT

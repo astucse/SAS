@@ -1,13 +1,23 @@
+{%extends 'base.html'%}
+
+{% block content%}
 {% load resources_extras %}
+{% load static%}
+
+<div class="container">
+<br>
 <form action="{% url 'view_worksheet' %}" method="post">
   {%csrf_token%}
   <!-- onchange="alert(this.value)" -->
   {% if not data%}
+  Select Chapter:
   <select name="chap_choice">
+
     {% for i in chap_choices %}
     <option value="{{i.0}}">{{i.0}}</option>
     {% endfor %}
   </select>
+  <br>
   <input type="submit" name="" value="Get worksheets">
   {% else %}
   <!-- data={1:q,2:w,3:e,} -->
@@ -38,4 +48,7 @@
   <input type="hidden" name="chap_choice" value="{{chap}}">
   {% endif %}
 
+</div>
 </form>
+
+{%endblock%}

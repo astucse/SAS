@@ -20,4 +20,5 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include('resources.urls')),
     path('',include('account.urls')),
+    path('forum/',include('niji.urls'))
 ]
